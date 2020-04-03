@@ -39,20 +39,20 @@ end;
     
 
 --Enforce Capacity -- Do I really need to use count?
-create or replace trigger ENFORCE_CAPACITY
-after insert on EVENT
-for each row
-declare 
-    ongoing_events integer;
-    max_events integer;
-Begin
-    
-    select capacity into max_events from Venue where venue_id = :old.venue_id;
-    --if ongoing_events > max_events then
-    --    dbms_output.put_line('Too many events at this venue');
-    --end if;
-end;
-/
+--create or replace trigger ENFORCE_CAPACITY
+--before insert on EVENT
+--for each row
+--declare 
+--    ongoing_events integer;
+--    max_events integer;
+--Begin
+--    select count(*) into ongoing_events from event group by venue_id;
+--    select capacity into max_events from Venue where venue.venue_id = venue_id;
+--    if ongoing_events = max_events then
+--        dbms_output.put_line('Too many events at this venue');
+--    end if;
+--end;
+--/
 
 
 --Other triggers go here

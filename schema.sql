@@ -19,17 +19,17 @@ drop table USER_ACCOUNT;
 drop table USER_ROLE;
 
 create table USER_ROLE(
-    role_id integer,
+    role_id integer not null,
     role_name varchar2(20),
     
     CONSTRAINT ROLE_PK PRIMARY KEY (role_id) initially deferred deferrable 
 );
 
 create table USER_ACCOUNT (
-    user_id integer,
-    username varchar2(20),
-    passkey varchar2(20),
-    role_id integer,
+    user_id integer not null,
+    username varchar2(20) not null,
+    passkey varchar2(20) not null,
+    role_id integer not null,
     last_login date,
 
     CONSTRAINT USER_ACCOUNT_PK PRIMARY KEY (user_id) initially deferred deferrable ,
@@ -40,7 +40,7 @@ create table USER_ACCOUNT (
 
 
 create table OLYMPICS(
-    olympic_id integer,
+    olympic_id integer not null,
     olympic_num varchar2(30),
     host_city varchar2(30),
     opening_date date,
@@ -53,20 +53,20 @@ create table OLYMPICS(
 
 
 create table SPORT(
-    sport_id integer,
-    sport_name varchar2(30),
+    sport_id integer not null,
+    sport_name varchar2(30) not null,
     description varchar2(80),
     dob date,
-    team_size integer,
+    team_size integer not null,
     
     CONSTRAINT SPORT_PK PRIMARY KEY (sport_id)
 );
 
 create table PARTICIPANT(
-    participant_id integer,
-    fname varchar2(30),
-    lname varchar2(30),
-    nationality varchar2(20),
+    participant_id integer not null,
+    fname varchar2(30) not null,
+    lname varchar2(30) not null,
+    nationality varchar2(20) not null,
     birth_place varchar2(40),
     dob date,
 
@@ -75,16 +75,16 @@ create table PARTICIPANT(
 );
 
 create table COUNTRY(
-    country_id integer,
-    country varchar2(20),
-    country_code varchar2(3),
+    country_id integer not null,
+    country varchar2(20) not null,
+    country_code varchar2(3) not null,
     
     CONSTRAINT COUNTRY_PK PRIMARY KEY (country_id) initially deferred deferrable 
 );
 
 create table TEAM(
-    team_id integer,
-    olympics_id integer,
+    team_id integer not null,
+    olympics_id integer not null,
     team_name varchar2(20),
     country_id integer,
     sport_id integer,
@@ -109,7 +109,7 @@ create table TEAM_MEMBER(
 );
 
 create table MEDAL(
-    medal_id integer,
+    medal_id integer not null,
     medal_title varchar2(6),
     points integer,
     
@@ -118,10 +118,10 @@ create table MEDAL(
 
 
 create table VENUE(
-    venue_id integer,
-    olympics_id integer,
+    venue_id integer not null,
+    olympics_id integer not null,
     venue_name varchar2(30),
-    capacity integer,
+    capacity integer not null,
     
     CONSTRAINT VENUE_PK PRIMARY KEY (venue_id) initially deferred deferrable ,
     CONSTRAINT VENUE_OLYMPIC_ID_FK FOREIGN KEY (olympics_id) REFERENCES OLYMPICS(olympic_id) initially deferred deferrable 
@@ -162,7 +162,7 @@ create table SCOREBOARD(
 create table EVENT_PARTICIPATION(
     event_id integer,
     team_id integer,
-    status char,
+    status char not null,
     
     CONSTRAINT EVENT_PARTICIPATION_PK PRIMARY KEY (event_id, team_id) initially deferred deferrable 
 );
