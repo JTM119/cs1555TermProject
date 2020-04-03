@@ -1,7 +1,7 @@
 --Joshua Martin
 --JTM119
 --Insert Statements
-
+--init.sql
 
 --Create the USER_ROLES (Role Id, Role name)
 insert into USER_ROLE values (1, 'Organizer');
