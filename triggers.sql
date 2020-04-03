@@ -36,7 +36,7 @@ end;
 /
     
 
---Enforce Capacity
+--Enforce Capacity -- Do I really need to use count?
 create or replace trigger ENFORCE_CAPACITY
 before insert on EVENT
 for each row
