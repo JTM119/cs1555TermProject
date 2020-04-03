@@ -3,6 +3,8 @@
 --Triggers 
 ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
 SET SERVEROUTPUT ON
+
+
 --Assign Medals
 
 
@@ -38,15 +40,17 @@ end;
 
 --Enforce Capacity -- Do I really need to use count?
 create or replace trigger ENFORCE_CAPACITY
-before insert on EVENT
+after insert on EVENT
 for each row
 declare 
     ongoing_events integer;
     max_events integer;
 Begin
-    --select count(*) into ongoing_events from events group by venue_id; -- I'm pretty sure this is just going to cause a mutating trigger
-    select capacity into max_events from Venue where venue_id = :new.venue_id;
-
+    
+    select capacity into max_events from Venue where venue_id = :old.venue_id;
+    --if ongoing_events > max_events then
+    --    dbms_output.put_line('Too many events at this venue');
+    --end if;
 end;
 /
 
@@ -66,7 +70,7 @@ declare
     max_size integer;
     current_size integer;
 Begin
-    
+    --select count(*) into current_size from TEAM_MEMBER where team_id = :new.team_id;
     select team_size into max_size 
     from sport natural join team
     where team_id = :new.team_id; 
