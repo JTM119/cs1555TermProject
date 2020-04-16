@@ -5,7 +5,14 @@ ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
 SET SERVEROUTPUT ON
 
 
---Assign Medals
+--Assign Medals -- This gives me a mutating trigger but I'm not sure if it actually does anything
+--CREATE OR REPLACE TRIGGER ASSIGN_MEDAL 
+--after insert on scoreboard
+--for each row
+--BEGIN
+--    update scoreboard set medal_id = :new.position where event_id = :new.event_id and participant_id = :new.participant_id;
+--END;
+--/
 
 
 --Athlete Dismissal
@@ -38,21 +45,26 @@ end;
 /
     
 
---Enforce Capacity -- Do I really need to use count?
---create or replace trigger ENFORCE_CAPACITY
---before insert on EVENT
---for each row
---declare 
---    ongoing_events integer;
---    max_events integer;
---Begin
---    select count(*) into ongoing_events from event group by venue_id;
---    select capacity into max_events from Venue where venue.venue_id = venue_id;
---    if ongoing_events = max_events then
---        dbms_output.put_line('Too many events at this venue');
---    end if;
---end;
---/
+--Enforce Capacity -- 
+create or replace trigger ENFORCE_CAPACITY
+before insert on EVENT
+for each row
+declare 
+    ongoing_events integer;
+    max_events integer;
+    too_many Exception;
+Begin
+    select coalesce(count(*),0) into ongoing_events from event where venue_id = :new.venue_id;
+    select capacity into max_events from Venue where venue.venue_id = :new.venue_id;
+    if ongoing_events = max_events then
+        Raise too_many;
+        
+    end if;
+    Exception
+    when too_many then dbms_output.put_line('Too many events at this venue');
+    
+end;
+/
 
 
 --Other triggers go here
@@ -79,3 +91,14 @@ end;
 /
 
 
+
+
+
+create or replace view connections as
+select distinct fname, lname, participant_id
+from EVENT_PARTICIPATION  natural join team natural join team_member natural join participant 
+where event_id in (select event_id 
+                    from EVENT_PARTICIPATION natural join team natural join team_member natural join participant
+                    where participant_id = 1) and olympic_id = 1;
+                    
+select * from connections;
