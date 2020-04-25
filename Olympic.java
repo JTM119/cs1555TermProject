@@ -599,6 +599,11 @@ public class Olympic{
 			while(!loggedIN){
 				
 					System.out.println("Press the number for the operation you wish to perform?\n[1] Login\n[2] Exit");
+					
+					while(!keyboard.hasNextInt()){
+						System.out.println("Please Enter an integer");
+						keyboard.nextLine();
+					}
 					int option = keyboard.nextInt();
 					keyboard.nextLine();
 					switch (option){
@@ -646,16 +651,31 @@ public class Olympic{
 						 	System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	System.out.println("Please enter the year of the olympics: ");
+						 	
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
+						 	
 						 	year = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter eventID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
+						 	
 						 	displayEvent(city, year, eventID);
 						 
 						 	break;
 						 case 4: 
 							
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	countryRanking(olympicsID);
@@ -664,9 +684,17 @@ public class Olympic{
 						 case 5:
 						 	
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the number of athletes you wish to see: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int k = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	topkAthletes(k, olympicsID);
@@ -675,13 +703,26 @@ public class Olympic{
 						 case 6:
 						 	
 						 	System.out.println("Enter an athletes ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
+
 						 	int participantId = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Enter a level of connectedness: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int n = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the olympics ID: ");
-						 	olympicsID = keyboard.nextInt();
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
+							olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	connectedAthletes(participantId, olympicsID, n);
 						 	
@@ -697,6 +738,10 @@ public class Olympic{
 						 	System.out.println("Please enter the password: ");
 						 	String passkey = keyboard.nextLine();
 						 	System.out.println("Please enter RoleID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	createUser(usname, passkey, eventID);
@@ -712,10 +757,18 @@ public class Olympic{
 						 case 10:
 						 	
 						 	System.out.println("Please enter the sport ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int sportID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter the venue ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int venueID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
@@ -732,22 +785,42 @@ public class Olympic{
 						 case 11:
 						 	
 						 	System.out.println("Please enter an olympicsID: " );
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter a team ID: " );
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	teamID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter an event ID: " );
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter a participant ID: " );
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	participantID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter a position: " );
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int position = keyboard.nextInt();
 						 	keyboard.nextLine();
 
@@ -761,6 +834,10 @@ public class Olympic{
 						System.out.println("Press the number for the operation you wish to perform?\n[1] Logout\n[2] Display sport information\n[3] Display event information"+
 										"\n[4] Display country rankings\n[5] Display top k athletes\n[6] View connected athletes\n[7] Exit\n[8] Create team \n[9] Register Team"+
 										"\n[10] Add participant\n[11] Add team member \n[12] Dismiss Athlete");
+					while(!keyboard.hasNextInt()){
+						System.out.println("Please Enter an integer");
+						keyboard.nextLine();
+					}
 					int option = keyboard.nextInt();
 					keyboard.nextLine();
 					switch (option){	
@@ -777,9 +854,17 @@ public class Olympic{
 						 	System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	System.out.println("Please enter the year of the olympics: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	year = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter eventID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
 						 	displayEvent(city, year, eventID);
 						 	
@@ -795,9 +880,17 @@ public class Olympic{
 						 case 5:
 						 	
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the number of athletes you wish to see: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int k = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	topkAthletes(k, olympicsID);
@@ -807,12 +900,24 @@ public class Olympic{
 						 case 6:
 						 	
 						 	System.out.println("Enter an athletes ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int participantId = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Enter a level of connectedness: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int n = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	connectedAthletes(participantId, olympicsID, n);
@@ -828,6 +933,10 @@ public class Olympic{
 						 	city = keyboard.nextLine();
 						 	
 						 	System.out.println("Please enter the year the olympics took place in: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	year = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	
@@ -844,10 +953,18 @@ public class Olympic{
 						 case 9:
 						 	
 						 	System.out.println("Please enter you team ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	teamID= keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter the event ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
@@ -873,10 +990,18 @@ public class Olympic{
 						 case 11:
 						 	
 						 	System.out.println("Please enter your team ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	teamID= keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	System.out.println("Please enter the participant ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	participantID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
@@ -886,6 +1011,10 @@ public class Olympic{
 						 case 12:
 						 	
 						 	System.out.println("Please enter the participant ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	participantID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
@@ -913,35 +1042,67 @@ public class Olympic{
 						 	System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	System.out.println("Please enter the year of the olympics: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	year = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter eventID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	eventID = keyboard.nextInt();
 						 	displayEvent(city, year, eventID);
 						 	break;
 						 case 4: 
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	countryRanking(olympicsID);
 						 	break;
 						 case 5:
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the number of athletes you wish to see: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int k = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	topkAthletes(k, olympicsID);
 						 	break;
 						 case 6:
 						 	System.out.println("Enter an athletes ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int participantId = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Enter a level of connectedness: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	int n = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	System.out.println("Please enter the olympics ID: ");
+						 	while(!keyboard.hasNextInt()){
+								System.out.println("Please Enter an integer");
+								keyboard.nextLine();
+							}
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	connectedAthletes(participantId, olympicsID, n);
