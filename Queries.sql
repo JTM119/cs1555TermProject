@@ -5,6 +5,13 @@
 --------------------------------------------
 --------------Organizer---------------------
 --------------------------------------------
+--login
+--call login('jtm119', 'Organizer');
+select role_id from USER_ACCOUNT where username = 'jtm119' and passkey = 'Organizer';
+
+--logout
+call logout('jtm119');
+
 --Create User
 call myCreateUser('jtm117', 'pass123', 2);
 
@@ -13,11 +20,12 @@ call dropUser('jtm117');
 
 
 --Create Event
-call createEvent(1,1, 1,'14-OCT-2004');
+call createEvent(1,1, 'M','14-OCT-2004');
 
 --Add event outcome uses ASSIGN MEDAL trigger
 
 call addEventOutcome(1, 1, 1, 1, 1);
+
 
 --------------------------------------------
 ------------------Coach---------------------
@@ -131,12 +139,6 @@ where participant_id = 1) and olympic_id = 3;
 
 select * from connections;
 
---Logout
-create or replace procedure logout(userNameLogin in string)
-as
-Begin
-    update user_account set last_login = systimestamp where username = userNameLogin;
-End;
-/
+
 
 

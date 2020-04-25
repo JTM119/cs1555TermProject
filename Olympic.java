@@ -92,15 +92,9 @@ public class Olympic{
 			return;
 		}
 
-		int sex;
-		if(gender == 'm' || gender == 'M'){
-			sex = 1;
-		}else if (gender == 'f' || gender == 'F'){
-			sex = 0;
-		}else{
-			sex = 2;
-		}
+		
 		try{
+		String sex = ""+gender;
 		PreparedStatement sqlStatement;
 		String query = "call createEvent(?, ?, ?, ?)";
 		// String query = "Begin insert into Event values (eventid_seq.nextval, ? , ?, ?, ?); end;";
@@ -108,7 +102,7 @@ public class Olympic{
 		sqlStatement.setInt(1, sportId);
 		sqlStatement.setInt(2, venueId);
 		sqlStatement.setString(4, date);
-		sqlStatement.setInt(3, sex);
+		sqlStatement.setString(3, sex);
 		sqlStatement.executeUpdate();
 		}catch(Exception e){
 			 e.printStackTrace();
@@ -359,14 +353,10 @@ public class Olympic{
 
 			result.next();
 
-			int gender = (int)result.getLong(1);
-			if (gender == 1){
-				System.out.println("Sport is : male");
-			}else if (gender == 0){
-				System.out.println("Sport is : female");
-			}else{
-				System.out.println("Sport is : coed");
-			}
+			String gender = result.getString(1);
+			
+			System.out.println("Sport Gender is : " + gender);
+			
 
 			System.out.println("The medalists for this sport were:");
 			query = "select fname, lname, country, medal_title, opening_date"+

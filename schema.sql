@@ -32,7 +32,8 @@ create table USER_ROLE(
     
     CONSTRAINT ROLE_PK PRIMARY KEY (role_id) initially immediate deferrable, 
     CHECK (role_id < 4), 
-    CHECK (role_id > 0)
+    CHECK (role_id > 0),
+    CHECK (role_name in ('Organizer', 'Coach', 'Guest'))
 );
 
 create table USER_ACCOUNT (
@@ -189,10 +190,10 @@ create table EVENT(
     event_id integer not null,
     sport_id integer not null,
     venue_id integer not null,
-    gender integer not null,
+    gender char not null,
     event_time date not null,
     --What check constraint should be here?
-    
+    CHECK (gender in ('m','M','f','F','b','B')),
     CONSTRAINT EVENT_PK PRIMARY KEY(event_id) initially immediate deferrable ,
     CONSTRAINT EVENT_SPORT_ID_FK FOREIGN KEY (sport_id) REFERENCES SPORT(sport_id) initially immediate deferrable ,
     CONSTRAINT EVENT_VENUE_ID FOREIGN KEY (venue_id) REFERENCES VENUE(venue_id) initially immediate deferrable 
@@ -213,7 +214,7 @@ create table SCOREBOARD(
     position integer not null,
     medal_id integer not null initially deferred,
 
-    CONSTRAINT SCOREBOARD_PK PRIMARY KEY (olympic_id, event_id, participant_id, team_id) initially immediate deferrable ,
+    CONSTRAINT SCOREBOARD_PK PRIMARY KEY (event_id, participant_id, team_id, position) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_OLYMPICID_FK FOREIGN KEY(olympic_id) REFERENCES OLYMPICS(olympic_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_EVENT_ID_FK FOREIGN KEY (event_id) REFERENCES EVENT(event_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_TEAMID_FK FOREIGN KEY (team_id) REFERENCES TEAM(team_id) initially immediate deferrable ,
@@ -227,7 +228,7 @@ create table EVENT_PARTICIPATION(
     event_id integer not null,
     team_id integer not null,
     status char not null,
-    
+    CHECK (status in ('e', 'n')),
     CONSTRAINT EVENT_PARTICIPATION_PK PRIMARY KEY (event_id, team_id) initially immediate deferrable, 
     CONSTRAINT EP_EVENT_ID_FK FOREIGN KEY (event_id) REFERENCES EVENT(event_id) initially immediate deferrable ,
     CONSTRAINT EP_TEAMID_FK FOREIGN KEY (team_id) REFERENCES TEAM(team_id) initially immediate deferrable

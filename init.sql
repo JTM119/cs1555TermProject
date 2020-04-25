@@ -157,48 +157,48 @@ select * from venue;
 ---------------------------------------------------------------------
 
 
-insert into EVENT values (eventid_seq.nextval, 1, 1, 1, '10-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 1, 2, 1, '29-JUL-2012');
-insert into EVENT values (eventid_seq.nextval, 1, 3, 1, '13-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 1, 4, 1, '20-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 1, 1, 'M', '10-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 1, 2, 'M', '29-JUL-2012');
+insert into EVENT values (eventid_seq.nextval, 1, 3, 'M', '13-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 1, 4, 'M', '20-AUG-2004');
 ---------------------------------------------------------------------
 ---------------------Mens Canoing 1000m -----------------------------
 ---------------------------------------------------------------------
-insert into EVENT values (eventid_seq.nextval, 2, 5, 1, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 2, 6, 1, '02-AUG-2012');
-insert into EVENT values (eventid_seq.nextval, 2, 7, 1, '15-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 2, 8, 1, '27-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 2, 5, 'M', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 2, 6, 'M', '02-AUG-2012');
+insert into EVENT values (eventid_seq.nextval, 2, 7, 'M', '15-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 2, 8, 'M', '27-AUG-2004');
 ---------------------------------------------------------------------
 ---------------------Womens Badmitten -----------------------------
 ---------------------------------------------------------------------
-insert into EVENT values (eventid_seq.nextval, 3, 9, 0, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 3, 10, 0, '02-AUG-2012');
-insert into EVENT values (eventid_seq.nextval, 3, 11, 0, '15-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 3, 12, 0, '27-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 3, 9, 'F', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 3, 10, 'F', '02-AUG-2012');
+insert into EVENT values (eventid_seq.nextval, 3, 11, 'F', '15-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 3, 12, 'F', '27-AUG-2004');
 ---------------------------------------------------------------------
 ---------------------Mens Badmitten -----------------------------
 ---------------------------------------------------------------------
-insert into EVENT values (eventid_seq.nextval, 4, 9, 1, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 4, 10, 1, '02-AUG-2012');
-insert into EVENT values (eventid_seq.nextval, 4, 11, 1, '15-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 4, 12, 1, '27-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 4, 9, 'M', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 4, 10, 'M', '02-AUG-2012');
+insert into EVENT values (eventid_seq.nextval, 4, 11, 'M', '15-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 4, 12, 'M', '27-AUG-2004');
 
 ---------------------------------------------------------------------
 ---------------------Mixed Badmitten -----------------------------
 ---------------------------------------------------------------------
-insert into EVENT values (eventid_seq.nextval, 5, 9, 2, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 5, 10, 2, '02-AUG-2012');
-insert into EVENT values (eventid_seq.nextval, 5, 11, 2, '15-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 5, 12, 2, '27-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 5, 9, 'B', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 5, 10, 'B', '02-AUG-2012');
+insert into EVENT values (eventid_seq.nextval, 5, 11, 'B', '15-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 5, 12, 'B', '27-AUG-2004');
 
 ---------------------------------------------------------------------
 ---------------------Women's Singles Badmitten -----------------------------
 ---------------------------------------------------------------------
-insert into EVENT values (eventid_seq.nextval, 6, 9, 0, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 6, 9, 0, '12-AUG-2008');
-insert into EVENT values (eventid_seq.nextval, 6, 10, 0, '02-AUG-2012');
-insert into EVENT values (eventid_seq.nextval, 6, 11, 0, '15-AUG-2016');
-insert into EVENT values (eventid_seq.nextval, 6, 12, 20, '27-AUG-2004');
+insert into EVENT values (eventid_seq.nextval, 6, 9, 'F', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 6, 9, 'F', '12-AUG-2008');
+insert into EVENT values (eventid_seq.nextval, 6, 10, 'F', '02-AUG-2012');
+insert into EVENT values (eventid_seq.nextval, 6, 11, 'F', '15-AUG-2016');
+insert into EVENT values (eventid_seq.nextval, 6, 12, 'F', '27-AUG-2004');
 commit;
 select * from event;
 ------------------------------------------------------------------------------------------------------------------------------------------

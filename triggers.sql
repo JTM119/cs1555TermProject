@@ -127,7 +127,7 @@ End;
 /
 
 --Create Event
-create or replace procedure createEvent (sportId in number, venueId in number, gender in number, dateStart in string)
+create or replace procedure createEvent (sportId in number, venueId in number, gender in string, dateStart in string)
 as
 Begin
     insert into Event values (eventid_seq.nextval, sportId , venueId, gender, dateStart);
@@ -198,3 +198,10 @@ Begin
 End;
 /
 
+--Logout
+create or replace procedure logout(userNameLogin in string)
+as
+Begin
+    update user_account set last_login = systimestamp where username = userNameLogin;
+End;
+/
