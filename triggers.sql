@@ -6,39 +6,39 @@ SET SERVEROUTPUT ON
 
 
 --Assign Medals -- This gives me a mutating trigger but I'm not sure if it actually does anything
---CREATE OR REPLACE TRIGGER ASSIGN_MEDAL 
---after insert on scoreboard
---for each row
---BEGIN
---    update scoreboard set medal_id = :new.position where event_id = :new.event_id and participant_id = :new.participant_id;
---END;
---/
+CREATE OR REPLACE TRIGGER ASSIGN_MEDAL 
+before insert on scoreboard
+for each row
+BEGIN
+    :new.medal_id := :new.position;
+END;
+/
 
 
 --Athlete Dismissal
 CREATE OR REPLACE Trigger ATHLETE_DISMISSAL
-After delete on Participant
+before delete on Participant
 for each row
 declare 
     dismissed_id integer;
 BEGIN
-    select participant_id into dismissed_id from participant where participant_id = :old.participant_id; --Get the participant ID to be used conveniently
+    --select participant_id into dismissed_id from participant where participant_id = :old.participant_id; --Get the participant ID to be used conveniently
     
     delete from scoreboard where  --Delete all of the medals from the scoreboard of anyone who was on his team
-        scoreboard.participant_id in (select participant_id from team_member where team_id in (select team_id from team_member where participant_id = dismissed_id));
+        scoreboard.participant_id in (select participant_id from team_member where team_id in (select team_id from team_member where participant_id = :old.participant_id));
     
     update event_participation
     set status = 'n'
-    where team_id in (select team_id from team_member where participant_id = dismissed_id) --Make all teams associated with the athlete inelligble
-        and 1 > (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id = dismissed_id));
+    where team_id in (select team_id from team_member where participant_id = :old.participant_id) --Make all teams associated with the athlete inelligble
+        and 1 > (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id =:old.participant_id));
     
-   delete from event_participation where  team_id in (select team_id from team_member where participant_id = dismissed_id) --Delete the team from that table if it's an atomic event
-       and 1 = (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id = dismissed_id));
+   delete from event_participation where  team_id in (select team_id from team_member where participant_id = :old.participant_id) --Delete the team from that table if it's an atomic event
+       and 1 = (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id = :old.participant_id));
         
     delete from team where  team_id in (select team_id from team_member where participant_id = dismissed_id) --Delete the team from that table if it's an atomic event
-     and 1 = (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id = dismissed_id));
+     and 1 = (select team_size from sport natural join team where team_id in (select team_id from team_member where participant_id = :old.participant_id));
         
-     delete from team_member where (participant_id = dismissed_id);
+     delete from team_member where (participant_id = :old.participant_id);
     
 
 end;

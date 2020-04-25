@@ -15,7 +15,7 @@ insert into USER_ROLE values (3, 'Guest');
 ---------------------------------------------------------------------
 ---------------------Mens 50m Pistol 60 -----------------------------
 ---------------------------------------------------------------------
-insert into USER_ACCOUNT values (user_id_seq.nextval, 'jtm119', 'Organizer', 2, '08-Aug-2008'); --KOR COACH 50M MENS PISTOL
+insert into USER_ACCOUNT values (user_id_seq.nextval, 'jtm119', 'Organizer', 1, '08-Aug-2008'); --KOR COACH 50M MENS PISTOL
 insert into USER_ACCOUNT values (user_id_seq.nextval, 'KOR-50M_Pistol_Men', 'COACH', 2, '08-Aug-2008'); --KOR COACH 50M MENS PISTOL
 insert into USER_ACCOUNT values (user_id_seq.nextval, 'CHN-50M_Pistol_Men', 'COACH', 2, '08-Aug-2008'); --CHN COACH 50M MENS PISTOL
 insert into USER_ACCOUNT values (user_id_seq.nextval, 'RUS-50M_Pistol_Men', 'COACH', 2, '08-Aug-2008'); --RUS COACH 50M MENS PISTOL
@@ -76,6 +76,7 @@ insert into USER_ACCOUNT values (user_id_seq.nextval, 'ESP-BadmittenSingles', 'C
 insert into USER_ACCOUNT values (user_id_seq.nextval, 'INA-BadmittenSingles', 'COACH', 2, '08-Aug-2008');
 insert into USER_ACCOUNT values (user_id_seq.nextval, 'GBR-BadmittenSingles', 'COACH', 2, '08-Aug-2008');
 
+commit;
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 --Create the OLYMPIC GAMES NECESSARY (olympic id, number, begin date, end date, website)
@@ -83,7 +84,7 @@ insert into OLYMPICS values (olympicid_seq.nextval, 'XXIX', 'Beijing', '08-AUG-2
 insert into OLYMPICS values (olympicid_seq.nextval, 'XXX', 'London', '27-JUL-2012', '12-AUG-2012', 'https://www.olympic.org/london-2012');
 insert into OLYMPICS values (olympicid_seq.nextval, 'XXX1', 'Rio', '05-AUG-2016', '21-AUG-2016', 'https://www.olympic.org/rio-2016');
 insert into OLYMPICS values (olympicid_seq.nextval, 'XXVIII', 'Athens', '12-AUG-2004', '29-AUG-2004', 'https://www.olympic.org/athens-2004');
-
+commit;
 select * from  olympics;
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -94,6 +95,7 @@ insert into SPORT values (sportid_seq.nextval, 'Doubles Womens Badminton', 'Hitt
 insert into SPORT values (sportid_seq.nextval, 'Doubles Mens Badminton', 'Hitting a birdie over a net',  '25-JUL-1992', 2);
 insert into SPORT values (sportid_seq.nextval, 'Mixed Doubles Badminton', 'Hitting a birdie over a net with men and women', '25-JUL-1992', 2);
 insert into SPORT values (sportid_seq.nextval, 'Womens Singles Badminton', 'Hitting a birdie over a net, but it is women by themselves', '25-JUL-1992', 1);
+commit;
 select * from  sport;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --COUNTRY (Id, Counry, Country Code)
@@ -114,13 +116,14 @@ insert into COUNTRY values (countryid_seq.nextval, 'Great Britain', 'GBR');
 insert into COUNTRY values (countryid_seq.nextval, 'Indonesia', 'INA');
 insert into COUNTRY values (countryid_seq.nextval, 'India', 'IND');
 insert into COUNTRY values (countryid_seq.nextval, 'Netherlands', 'NED');
+commit;
 select * from  country;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --MEDALS (id, place, points)
 insert into medal values (1, 'Gold', 3); 
 insert into medal values (2, 'Silver', 2);
 insert into medal values (3, 'Bronze', 1);
-
+commit;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --VENUES (venue id, olympic id, venue name, capacity)
 ---------------------------------------------------------------------
@@ -144,7 +147,7 @@ insert into VENUE values (venueid_seq.nextval, 1 , 'Beijing Uni Tech', 4);
 insert into VENUE values (venueid_seq.nextval, 2, 'SEE Arena', 5);
 insert into VENUE values (venueid_seq.nextval, 3, 'RiocentroConvention', 5);
 insert into VENUE values (venueid_seq.nextval, 4, 'GoudiOlympicHall', 5);
-
+commit;
 select * from venue;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --EVENT (event_id, sport id, venue id, gender, date)
@@ -194,7 +197,7 @@ insert into EVENT values (eventid_seq.nextval, 6, 9, 0, '12-AUG-2008');
 insert into EVENT values (eventid_seq.nextval, 6, 10, 0, '02-AUG-2012');
 insert into EVENT values (eventid_seq.nextval, 6, 11, 0, '15-AUG-2016');
 insert into EVENT values (eventid_seq.nextval, 6, 12, 20, '27-AUG-2004');
-
+commit;
 select * from event;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --PARTICIPANT (participant id, fname, lname, nationality, place of birth, dob)
@@ -210,6 +213,7 @@ insert into PARTICIPANT values (participantid_seq.nextval, 'XUÂN VINH', 'HOÀNG
 insert into PARTICIPANT values (participantid_seq.nextval, 'Song Guk', 'Kim', 'North Korea', 'North Korea', '11-APR-1984');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Mikhail', 'Nestruev','Russia', 'Moscow', '28-OCT-1968');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Jong Sue', 'Kim', 'North Korea', 'North Korea', '01-JAN-1977');
+commit;
 ---------------------------------------------------------------------
 ---------------------Mens Canoing 1000m -----------------------------
 ---------------------------------------------------------------------
@@ -221,7 +225,7 @@ insert into PARTICIPANT values (participantid_seq.nextval, 'Sebsatian', 'Brendel
 insert into PARTICIPANT values (participantid_seq.nextval, 'Mark', 'Oldershaw', 'Canada', 'Burlington', '07-FEB -1983');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Ilia', 'Shtokalov', 'Russia',  'Leningrad', '01-SEP-1986');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Isaquias', 'Santos', 'Brazil', 'Ubaitaba', '03-JAN-1994');
-
+commit;
 ---------------------------------------------------------------------
 ---------------------Womens Badmitten -----------------------------
 ---------------------------------------------------------------------
@@ -252,6 +256,7 @@ insert into PARTICIPANT values (participantid_seq.nextval, 'Christinna', 'Peders
 insert into PARTICIPANT values (participantid_seq.nextval, 'Kamilla', 'Juhl', 'Denmark', 'Skagen', '23-NOV-1983');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Jung', 'Kyung-eun', 'South Korea', 'Masan', '20-MAR-1990');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Shin', 'Seung-chan', 'South Korea', 'Gochang-gun', '06-DEC-1994');
+commit;
 ---------------------------------------------------------------------
 ---------------------Mens Badmitten -----------------------------
 ---------------------------------------------------------------------
@@ -262,6 +267,7 @@ insert into PARTICIPANT values(participantid_seq.nextval, 'Lee', 'Dong-soo', 'So
 insert into PARTICIPANT values(participantid_seq.nextval, 'Yoo', 'Yong-sung', 'South Korea','Dangjin', '25-OCT-1974');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Eng', 'Hian', 'Indonesia', 'Surakarta', '17-MAY-1977');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Flandy', 'Limpele','Indonesia', 'Manado', '09-FEB-1974');
+commit;
 
 insert into PARTICIPANT values(participantid_seq.nextval, 'Markis', 'Kido', 'Indonesia', 'Jakarta', '11-AUG-1984');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Hendra', 'Setiawan' ,'Indonesia', 'Pemalang', '25-AUG-1984');
@@ -269,14 +275,14 @@ insert into PARTICIPANT values(participantid_seq.nextval, 'Cai', 'Yun', 'China',
 insert into PARTICIPANT values(participantid_seq.nextval, 'Fu', 'Haifeng', 'China','Jieyang', '02-JAN-1984');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Lee', 'Jae-jin', 'South Korea', 'Miryang', '26-JAN-1983');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Hwang', 'Ji-man','South Korea', 'Miryang', '08-JUL-1984');
-
+commit;
 --50
 --51
 insert into PARTICIPANT values(participantid_seq.nextval, 'Mathias', 'Boe', 'Denmark', 'Frederikssund', '11-JUL-1980');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Carsten', 'Mogensen', 'Denmark', 'Roskilde', '24-JUL-1983');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Jung', 'Jae-sung', 'South Korea', 'Jeonju', '25-AUG-1982');
-insert into PARTICIPANT values(participantid_seq.nextval, 'Lee', 'Yong-dae', ' South Korea', 'Hwasun', '11-SEP-1988');
-
+insert into PARTICIPANT values(participantid_seq.nextval, 'Lee', 'Yong-dae', 'South Korea', 'Hwasun', '11-SEP-1988');
+commit;
 --51
 insert into PARTICIPANT values(participantid_seq.nextval, 'Zhang', 'Nan', 'China', 'Beijing', '01-MAR-1990');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Goh', 'Shem', 'Malaysia', 'Kuala Lumpur', '20-MAY-1989');
@@ -284,7 +290,7 @@ insert into PARTICIPANT values(participantid_seq.nextval, 'Tan', 'Kiong', 'Malay
 insert into PARTICIPANT values(participantid_seq.nextval, 'Chris', 'Langridge','Great Britain', 'Epsom', '02-MAY-1985');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Marcus', 'Ellis', 'Great Britain', 'Huddersfield', '14-SEP-1989');
 
-
+commit;
 ---------------------------------------------------------------------
 ---------------------Mixed Badmitten -----------------------------
 ---------------------------------------------------------------------
@@ -295,7 +301,7 @@ insert into PARTICIPANT values(participantid_seq.nextval, 'Gail', 'Emms', 'Great
 insert into PARTICIPANT values(participantid_seq.nextval, 'Nathan', 'Robertson', 'Great Britain', 'Nottingham', '30-MAY-1977');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Jens', 'Eriksen', 'Denmark','Glostrup', '30-DEC-1969');
 insert into PARTICIPANT values(participantid_seq.nextval,  'Mette', 'Schjoldager', 'Denmark','Viby', '21-APR-1977');
-
+commit;
 --26
 --57
 insert into PARTICIPANT values(participantid_seq.nextval, 'Nova', 'Widianto', 'Indonesia', 'Indonesia', '10-OCT-1977');
@@ -303,21 +309,21 @@ insert into PARTICIPANT values(participantid_seq.nextval, 'Lilyana', 'Natsir','I
 insert into PARTICIPANT values(participantid_seq.nextval, 'He', 'Hanbin', 'China', 'Nanchang', '10-JAN-1986');
 --25
 
-
+commit;
 --58
 --31
 insert into PARTICIPANT values(participantid_seq.nextval, 'Xu', 'Chen', 'China', 'Jiangsu', '29-NOV-1984');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Ma', 'Jin', 'China', 'Nantong', '07-MAY-1988');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Joachim', 'Nielsen', 'Denmark', 'Gentofte', '23-NOV-1978');
 --38
-
-insert into PARTICIPANT values(participantid_seq.nextval, 'Tontowi', 'Ahmad', 'Indoenesia', 'Banyumas', '18-JUL-1987');
+commit;
+insert into PARTICIPANT values(participantid_seq.nextval, 'Tontowi', 'Ahmad', 'Indonesia', 'Banyumas', '18-JUL-1987');
 --69
 insert into PARTICIPANT values(participantid_seq.nextval, 'Chan', 'Soon', 'Malaysia', 'George Town', '27-APR-1988');
 insert into PARTICIPANT values(participantid_seq.nextval, 'Goh', 'Ying', 'Malaysia', 'Malacca', '30-MAY-1989');
 --58
 --31
-
+commit;
 
 ---------------------------------------------------------------------
 ---------------------Women's Singles Badmitten -----------------------------
@@ -337,7 +343,7 @@ insert into PARTICIPANT values (participantid_seq.nextval, 'Saina', 'Nehwal', 'I
 insert into PARTICIPANT values (participantid_seq.nextval,	'Carolina', 'Marín', 'Spain', 'Huelva', '15-JUN-1993');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Pusarla', 'Sindhu', 'India', 'Hyderabad', '05-JUL-1995');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Nozomi', 'Okuhara', 'Japan', 'Ōmachi', '13-MAR-1995');
-
+commit;
 select * from  participant;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --TEAM (team id, olympic id, team name, country id, sport id, coachid)
@@ -458,7 +464,7 @@ insert into TEAM values (teamid_seq.nextval, 2, 'SingleBadmitten2-IND', 16, 6, 3
 insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-JPN', 11, 6, 31); --2016
 insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-IND', 16, 6, 34);
 insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-ESP', 8, 6, 35);
-
+commit;
 select * from team;
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -772,7 +778,7 @@ insert into SCOREBOARD values (3, 24, 70, 85, 1, 1);--2016
 insert into SCOREBOARD values (3, 24, 71, 86, 2, 2);
 insert into SCOREBOARD values (3, 24, 72, 87, 3, 3);
 ---------------------------------------------------------------------
-
+commit;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --EVENT_PARTICIPATION (event id, team id, status)
 

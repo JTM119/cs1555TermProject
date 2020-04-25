@@ -115,8 +115,8 @@ create table PARTICIPANT(
     birth_place varchar2(40) not null,
     dob date not null,
 
-    CONSTRAINT PARTICIPANT_PK PRIMARY KEY (participant_id) initially immediate deferrable
-    --CONSTRAINT PARTICIPANT_FK FOREIGN KEY (nationality) REFERENCES COUNTRY(country) initially deferred deferrable 
+    CONSTRAINT PARTICIPANT_PK PRIMARY KEY (participant_id) initially immediate deferrable,
+    CONSTRAINT PARTICIPANT_FK FOREIGN KEY (nationality) REFERENCES COUNTRY(country) initially deferred deferrable 
 );
 create sequence ParticipantID_seq
 start with 1
@@ -160,7 +160,7 @@ create table TEAM_MEMBER(
 
 
 create table MEDAL(
-    medal_id integer not null,
+    medal_id integer,
     medal_title varchar2(6) not null,
     points integer not null,
     
@@ -211,9 +211,9 @@ create table SCOREBOARD(
     team_id integer not null,
     participant_id integer not null,
     position integer not null,
-    medal_id integer not null,
+    medal_id integer not null initially deferred,
 
-    CONSTRAINT SCOREBOARD_PK PRIMARY KEY (olympic_id, event_id, participant_id) initially immediate deferrable ,
+    CONSTRAINT SCOREBOARD_PK PRIMARY KEY (olympic_id, event_id, participant_id, team_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_OLYMPICID_FK FOREIGN KEY(olympic_id) REFERENCES OLYMPICS(olympic_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_EVENT_ID_FK FOREIGN KEY (event_id) REFERENCES EVENT(event_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_TEAMID_FK FOREIGN KEY (team_id) REFERENCES TEAM(team_id) initially immediate deferrable ,

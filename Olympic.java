@@ -31,9 +31,10 @@ public class Olympic{
 			olympicDb = connection;
 
 		}catch(Exception e){
-			 System.out.println(
+			System.out.println(
                     "Error connecting to database. Printing stack trace: ");
             e.printStackTrace();
+            System.out.println("STACK PRINTED");
 		}
 	}
 	
@@ -88,10 +89,10 @@ public class Olympic{
 		try{
 		Statement sqlStatement;
 		sqlStatement = olympicDb.createStatement();
-		sqlStatement.executeQuery("insert into Event values (eventid_seq.next, " + sportId + ", "+ venueId+ ", "+ sex+", '"+ date +"'");
+		sqlStatement.executeQuery("insert into Event values (eventid_seq.nextval, " + sportId + ", "+ venueId+ ", "+ sex+", '"+ date +"')");
 		}catch(Exception e){
-			 // e.printStackTrace();
-			System.out.println("Error encountered");
+			 e.printStackTrace();
+			//System.out.println("Error encountered");
 		}
 	}
 
@@ -104,10 +105,10 @@ public class Olympic{
 		try{
 			Statement sqlStatement;
 			sqlStatement = olympicDb.createStatement();
-			sqlStatement.executeQuery("insert into scoreboard values(" + olympicID + ", " + eventId + ", " + teamId + ", " + participantId + ", " + position);
+			sqlStatement.executeQuery("insert into scoreboard (olympic_id, event_id, team_id, participant_id, position) values(" + olympicID + ", " + eventId + ", " + teamId + ", " + participantId + "," + position+")");
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 // System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 	}
 
@@ -190,11 +191,11 @@ public class Olympic{
 		try{
 			Statement sqlStatement;
 			sqlStatement = olympicDb.createStatement();
-			String preQuery = "insert into participant values (participantid_seq.nextval,'" + fname + "', '" + lname + "', '" + nationality + "', '" + birthPlace +"', "+dob+")";
+			String preQuery = "insert into participant values (participantid_seq.nextval,'" + fname + "', '" + lname + "', '" + nationality + "', '" + birthPlace +"', '"+dob+"')";
 			sqlStatement.executeQuery(preQuery);
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 //System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 	}
 
@@ -213,8 +214,8 @@ public class Olympic{
 			String preQuery = "insert into team_member values (" + teamId + ", " + participantId + ")";
 			sqlStatement.executeQuery(preQuery);
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 // System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 
 	}
@@ -232,8 +233,8 @@ public class Olympic{
 		sqlStatement = olympicDb.createStatement();
 		sqlStatement.executeQuery("delete from participant where participant_id = " + participantId);
 		}catch(Exception e){
-			 // e.printStackTrace();
-			System.out.println("Error encountered");
+			e.printStackTrace();
+			//System.out.println("Error encountered");
 		}
 	}
 
@@ -345,7 +346,8 @@ public class Olympic{
 			sqlStatement = olympicDb.createStatement();
 			String query = "select distinct host_city, fName, Lname, position, medal_title, sport_name" + 
 							" from scoreboard natural join olympics natural join event natural join participant natural join medal natural join (team natural join sport)" + 
-							" where host_city = '" + city+ "' and event_id = "+ eventID;
+							" where host_city = '" + city+ "' and event_id = "+ eventID +
+							"order by position asc";
 
 			ResultSet result = sqlStatement.executeQuery(query);
 			System.out.println("HOST CITY\t\tFNAME\t\tLNAME\t\tPOSITION\t\tMEDAL\t\tSPORT NAME");
@@ -504,71 +506,88 @@ public class Olympic{
 			int year;
 			int participantID;
 			while(!loggedIN){
-				System.out.println("Press the number for the operation you wish to perform?\n[1] Login\n[2] Display sport information\n[3] Display event information"+
+				try{
+					System.out.println("Press the number for the operation you wish to perform?\n[1] Login\n[2] Display sport information\n[3] Display event information"+
 										"\n[4] Display country rankings\n[5] Display top k athletes\n[6] View connected athletes\n[7] Exit");
-				int option = keyboard.nextInt();
-				keyboard.nextLine();
-				switch (option){
-					case 1:
-						System.out.println("Please enter username: ");
-					 	String username = keyboard.nextLine();
-					 	System.out.println("Please enter password: ");
-					 	String password = keyboard.nextLine();
-					 	notLoggedIn = login(username, password);
-					 	break;
-					 case 2:
-					 	System.out.println("Please enter sport: ");
-					 	sport = keyboard.nextLine();
-					 	displaySport(sport);
-					 	break;
-					 case 3:
-					 	System.out.println("Please enter the city the olympics took place in: ");
-					 	city = keyboard.nextLine();
-					 	System.out.println("Please enter the year of the olympics: ");
-					 	year = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	System.out.println("Please enter eventID: ");
-					 	eventID = keyboard.nextInt();
-					 	displayEvent(city, year, eventID);
-					 	break;
-					 case 4: 
-					 	System.out.println("Please enter the olympics ID: ");
-					 	olympicsID = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	countryRanking(olympicsID);
-					 	break;
-					 case 5:
-					 	System.out.println("Please enter the olympics ID: ");
-					 	olympicsID = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	System.out.println("Please enter the number of athletes you wish to see: ");
-					 	int k = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	topkAthletes(k, olympicsID);
-					 	break;
-					 case 6:
-					 	System.out.println("Enter an athletes ID: ");
-					 	int participantId = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	System.out.println("Enter a level of connectedness: ");
-					 	int n = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	System.out.println("Please enter the olympics ID: ");
-					 	olympicsID = keyboard.nextInt();
-					 	keyboard.nextLine();
-					 	connectedAthletes(participantId, olympicsID, n);
-					 	break;
-					 case 7:
-					 	System.out.println("Exiting");
-					 	exit();
-						break;
-					 default:
-					 	System.out.println("Invalid option");
-					 
+					int option = keyboard.nextInt();
+					keyboard.nextLine();
+					switch (option){
+						case 1:
+							
+								System.out.println("Please enter username: ");
+							 	String username = keyboard.nextLine();
+							 	System.out.println("Please enter password: ");
+							 	String password = keyboard.nextLine();
+							 	notLoggedIn = login(username, password);
+							 
+						 	break;
+						 case 2:
+						 	System.out.println("Please enter sport: ");
+						 	sport = keyboard.nextLine();
+						 	displaySport(sport);
+						 	break;
+						 case 3:
+						 	
+						 	System.out.println("Please enter the city the olympics took place in: ");
+						 	city = keyboard.nextLine();
+						 	System.out.println("Please enter the year of the olympics: ");
+						 	year = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	System.out.println("Please enter eventID: ");
+						 	eventID = keyboard.nextInt();
+						 	displayEvent(city, year, eventID);
+
+						 	break;
+						 case 4: 
+						 	
+						 	System.out.println("Please enter the olympics ID: ");
+						 	olympicsID = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	countryRanking(olympicsID);
+						 	
+						 	break;
+						 case 5:
+						 	
+						 	System.out.println("Please enter the olympics ID: ");
+						 	olympicsID = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	System.out.println("Please enter the number of athletes you wish to see: ");
+						 	int k = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	topkAthletes(k, olympicsID);
+						 	
+						 	break;
+						 case 6:
+						 	
+						 	System.out.println("Enter an athletes ID: ");
+						 	int participantId = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	System.out.println("Enter a level of connectedness: ");
+						 	int n = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	System.out.println("Please enter the olympics ID: ");
+						 	olympicsID = keyboard.nextInt();
+						 	keyboard.nextLine();
+						 	connectedAthletes(participantId, olympicsID, n);
+						 	
+						 	break;
+						 case 7:
+						 	System.out.println("Exiting");
+						 	exit();
+							break;
+						 default:
+						 	System.out.println("Invalid option");
+						 }
+
+
+					}catch(Exception e){
+						System.out.println("Invalid input type");
+						continue;
+					}
 				}
-			}
+			
 
-
+			
 			//The user is now logged in 
 			while(loggedIN){
 				if(userRole == 1){
@@ -587,6 +606,7 @@ public class Olympic{
 						 	displaySport(sport);
 						 	break;
 						 case 3:
+						 	try{
 						 	System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	System.out.println("Please enter the year of the olympics: ");
@@ -595,14 +615,22 @@ public class Olympic{
 						 	System.out.println("Please enter eventID: ");
 						 	eventID = keyboard.nextInt();
 						 	displayEvent(city, year, eventID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 4: 
+							try{
 						 	System.out.println("Please enter the olympics ID: ");
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	countryRanking(olympicsID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 5:
+						 	try{
 						 	System.out.println("Please enter the olympics ID: ");
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -610,8 +638,12 @@ public class Olympic{
 						 	int k = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	topkAthletes(k, olympicsID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 6:
+						 	try{
 						 	System.out.println("Enter an athletes ID: ");
 						 	int participantId = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -622,12 +654,16 @@ public class Olympic{
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	connectedAthletes(participantId, olympicsID, n);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 7:
 						 	System.out.println("Exiting");
 						 	exit();
 							break;
 						case 8:
+							try{
 							System.out.println("Please enter the username: ");
 						 	String usname = keyboard.nextLine();
 						 	System.out.println("Please enter the password: ");
@@ -636,13 +672,21 @@ public class Olympic{
 						 	eventID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	createUser(usname, passkey, eventID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 9:
+						 	try{
 						 	System.out.println("Please enter the username: ");
 						 	String toDrop= keyboard.nextLine();
 						 	dropUser(toDrop);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 10:
+						 	try{
 						 	System.out.println("Please enter the sport ID: ");
 						 	int sportID = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -658,8 +702,12 @@ public class Olympic{
 						 	char gender = keyboard.next().charAt(0);
 
 						 	createEvent(sportID, venueID, eventDate, gender);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 11:
+						 	try{
 						 	System.out.println("Please enter an olympicsID: " );
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -681,6 +729,9 @@ public class Olympic{
 						 	keyboard.nextLine();
 
 						 	addEventOutcome(olympicsID, teamID, eventID, participantID, position);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 default:
 						 	System.out.println("Invalid option");
@@ -691,7 +742,7 @@ public class Olympic{
 										"\n[10] Add participant\n[11] Add team member \n[12] Dismiss Athlete");
 					int option = keyboard.nextInt();
 					keyboard.nextLine();
-					switch (option){
+					switch (option){	
 						case 1:
 							logout();
 						 	break;
@@ -701,6 +752,7 @@ public class Olympic{
 						 	displaySport(sport);
 						 	break;
 						 case 3:
+						 	try{
 						 	System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	System.out.println("Please enter the year of the olympics: ");
@@ -709,14 +761,22 @@ public class Olympic{
 						 	System.out.println("Please enter eventID: ");
 						 	eventID = keyboard.nextInt();
 						 	displayEvent(city, year, eventID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 4: 
+							 try{
 						 	System.out.println("Please enter the olympics ID: ");
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	countryRanking(olympicsID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 5:
+						 	try{
 						 	System.out.println("Please enter the olympics ID: ");
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -724,8 +784,12 @@ public class Olympic{
 						 	int k = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	topkAthletes(k, olympicsID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 6:
+						 	try{
 						 	System.out.println("Enter an athletes ID: ");
 						 	int participantId = keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -736,12 +800,16 @@ public class Olympic{
 						 	olympicsID = keyboard.nextInt();
 						 	keyboard.nextLine();
 						 	connectedAthletes(participantId, olympicsID, n);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 7:
 						 	System.out.println("Exiting");
 						 	exit();
 							break;
 						case 8:
+							try{
 							System.out.println("Please enter the city the olympics took place in: ");
 						 	city = keyboard.nextLine();
 						 	
@@ -757,9 +825,12 @@ public class Olympic{
 
 						 	System.out.println("Please enter your team name: ");
 						 	String teamName = keyboard.nextLine();
-
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 }
 						 	break;
 						 case 9:
+						 	try{
 						 	System.out.println("Please enter you team ID: ");
 						 	teamID= keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -769,8 +840,12 @@ public class Olympic{
 						 	keyboard.nextLine();
 
 						 	registerTeam(teamID, eventID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 10:
+						 	try{
 						 	System.out.println("Please enter the first name: ");
 						 	String fname = keyboard.nextLine();
 						 	System.out.println("Please enter the last name: ");
@@ -783,8 +858,12 @@ public class Olympic{
 						 	String birthplace = keyboard.nextLine();
 
 						 	addParticipant(fname, lname, dob, nationality, birthplace);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 11:
+						 	try{
 						 	System.out.println("Please enter your team ID: ");
 						 	teamID= keyboard.nextInt();
 						 	keyboard.nextLine();
@@ -794,13 +873,20 @@ public class Olympic{
 						 	keyboard.nextLine();
 
 						 	addTeamMember(teamID, participantID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 case 12:
+						 	try{
 						 	System.out.println("Please enter the participant ID: ");
 						 	participantID = keyboard.nextInt();
 						 	keyboard.nextLine();
 
 						 	dropTeamMember(participantID);
+						 	 }catch(Exception e){
+						 	System.out.println("Invalid input type");
+						 	}
 						 	break;
 						 default:
 						 	System.out.println("Invalid option");
