@@ -155,6 +155,8 @@ select * from venue;
 ---------------------------------------------------------------------
 ---------------------Mens 50m Pistol 60 -----------------------------
 ---------------------------------------------------------------------
+
+
 insert into EVENT values (eventid_seq.nextval, 1, 1, 1, '10-AUG-2008');
 insert into EVENT values (eventid_seq.nextval, 1, 2, 1, '29-JUL-2012');
 insert into EVENT values (eventid_seq.nextval, 1, 3, 1, '13-AUG-2016');
@@ -202,8 +204,10 @@ select * from event;
 ------------------------------------------------------------------------------------------------------------------------------------------
 --PARTICIPANT (participant id, fname, lname, nationality, place of birth, dob)
 ---------------------------------------------------------------------
----------------------Mens 50m Pistol 60 -----------------------------
+---------------------Mens    50m Pistol 60 -----------------------------
 ---------------------------------------------------------------------
+--insert into participant values (participantid_seq.nextval,'Joshua', 'Martin', 'China', 'Beijing', '16-NOV-1999');
+
 insert into PARTICIPANT values (participantid_seq.nextval, 'Jongoh', 'Jin', 'South Korea', 'Chuncheon-si', '24-SEP-1979');
 insert into PARTICIPANT values (participantid_seq.nextval, 'ZongLiang', 'Tan', 'China', 'Weifang', '29-NOV-1971');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Vladimir', 'Isakov', 'Russia', 'Moscow Oblast', '28-Feb-1970');
@@ -629,11 +633,11 @@ commit;
 ---------------------Mens 50m Pistol 60 -----------------------------
 ---------------------------------------------------------------------
 
-insert into SCOREBOARD values (1, 1, 1, 1, 1, 1);--Mens Shooting 2008
+--insert into SCOREBOARD values (1, 1, 1, 1, 1, 1);--Mens Shooting 2008
 insert into SCOREBOARD values (1, 1, 2, 2, 2, 2);
 insert into SCOREBOARD values (1, 1, 3, 3, 3, 3);
 
-insert into SCOREBOARD values (2, 2, 4, 1, 1, 1);--Mens Shooting 2012
+insert into SCOREBOARD values (2, 2, 4, 6, 1, 1);--Mens Shooting 2012
 insert into SCOREBOARD values (2, 2, 5, 4, 2, 2);
 insert into SCOREBOARD values (2, 2, 6, 5, 3, 3);
 
@@ -647,9 +651,11 @@ insert into SCOREBOARD values (4, 4, 12, 9, 3, 3);
 ---------------------------------------------------------------------
 ---------------------Mens Canoing 1000m -----------------------------
 ---------------------------------------------------------------------
+
 insert into SCOREBOARD values (4, 5, 13, 10, 1, 1);--Mens Canoing 2004
 insert into SCOREBOARD values (4, 5, 14, 11, 2, 2);
 insert into SCOREBOARD values (4, 5, 15, 12, 3, 3);
+
 
 insert into SCOREBOARD values (1, 6, 16, 12, 1, 1);--Mens Canoing 2008
 insert into SCOREBOARD values (1, 6, 17, 10, 2, 2);

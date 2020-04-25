@@ -24,29 +24,8 @@ public class Driver{
 				//Print the table before logging int
 				Statement sqlStatement;
 				String query;
-				try{
-					sqlStatement = olympicDb.createStatement();
-					query = "select * from USER_ACCOUNT";	
-					result = sqlStatement.executeQuery(query);
-					while(result.next()){
-							
-							System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + " ");
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+				
 				System.out.println("The login was successful :" + tester.login("jtm119", "Organizer"));
-				try{
-					sqlStatement = olympicDb.createStatement();
-					query = "select * from USER_ACCOUNT";	
-					result = sqlStatement.executeQuery(query);
-					while(result.next()){
-							
-							System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + " ");
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
 
 			//Testing Organizer Methods -----------------------------------------------------------------------------------------
 
@@ -64,6 +43,7 @@ public class Driver{
 					e.printStackTrace();
 				}
 				tester.createUser("jtm117", "pass123", 2);
+				System.out.println("\n\nAfter");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from USER_ACCOUNT";	
@@ -105,7 +85,7 @@ public class Driver{
 				}
 
 			//Next test create event
-				System.out.println("Now testing create event, creating event with sportID 1, venue ID 1, date Oct 14 2004, gender M");	
+				System.out.println("\n\nNow testing create event, creating event with sportID 1, venue ID 1, date Oct 14 2004, gender M");	
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from EVENT";	
@@ -133,7 +113,7 @@ public class Driver{
 			
 			//Next test add event outcome
 				//Event 26
-				System.out.println("\n\nTesting add event outcome should see (1, 1, 1, 1, 2)");
+				System.out.println("\n\nTesting add event outcome should see (1, 1, 1, 1, 1)");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from SCOREBOARD";	
@@ -163,8 +143,32 @@ public class Driver{
 			//Test Log Out-------------------------------------------------------------------------------------------------------
 				//Create a coach
 				tester.createUser("jtm117", "pass123", 2);
-				System.out.println("Logging out now");
+
+				System.out.println("\n\nLogging out now");
+				try{
+					sqlStatement = olympicDb.createStatement();
+					query = "select * from USER_ACCOUNT";	
+					result = sqlStatement.executeQuery(query);
+					while(result.next()){
+							
+							System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + " ");
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				tester.logout();
+				System.out.println("\n\nAfter Log out");
+				try{
+					sqlStatement = olympicDb.createStatement();
+					query = "select * from USER_ACCOUNT";	
+					result = sqlStatement.executeQuery(query);
+					while(result.next()){
+							
+							System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + " ");
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				tester.login("jtm117", "pass123");
 
 
@@ -185,6 +189,7 @@ public class Driver{
 					e.printStackTrace();
 				}
 				tester.createTeam("Athens", 2004, "1000M Canoe Sprint", "China", "Successors");
+				System.out.println("\n\nAfter");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from TEAM";	
@@ -199,7 +204,7 @@ public class Driver{
 
 
 			//Testing Register Team
-				System.out.println("Testing register team: will register the team created in createTeam to an event (1, 73)");
+				System.out.println("\n\nTesting register team: will register the team created in createTeam to an event (1, 73)");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from EVENT_PARTICIPATION";	
@@ -213,6 +218,7 @@ public class Driver{
 				}
 
 				tester.registerTeam(73, 1);
+				System.out.println("\n\nAfter");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from EVENT_PARTICIPATION";	
@@ -241,6 +247,7 @@ public class Driver{
 					e.printStackTrace();
 				}
 				tester.addParticipant("Joshua", "Martin", "16-NOV-1999", "China", "Beijing");
+				System.out.println("\n\nAfter");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from Participant";	
@@ -267,6 +274,7 @@ public class Driver{
 					e.printStackTrace();
 				}
 				tester.addTeamMember(73, 88);
+				System.out.println("\n\nAfter");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from TEAM_MEMBER";	
@@ -293,7 +301,7 @@ public class Driver{
 					e.printStackTrace();
 				}
 				tester.dropTeamMember(88);
-				System.out.println("\nAfter Deletion");
+				System.out.println("\n\nAfter Deletion");
 				try{
 					sqlStatement = olympicDb.createStatement();
 					query = "select * from Participant";	
@@ -326,12 +334,16 @@ public class Driver{
 				System.out.println("\n\nNow testing top k athletes for 5 athletes in the Athens olympics");
 				tester.topkAthletes(5, 4);
 				
+
+			//Test Connected Athletes
+				System.out.println("\n\nNow Testing connected athletes with n = 1, participant Id = 1, Olympic Id = 3");
+				tester.connectedAthletes(1, 3, 1);
 			//Test Exit
 				System.out.println("\n\nNow testing exit, the application should now quit");
 				tester.exit();
 				System.out.println("If this is printing something has gone wrong");
 			}catch(Exception e){
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 	}
 }

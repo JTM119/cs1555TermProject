@@ -102,3 +102,99 @@ where event_id in (select event_id
                     where participant_id = 1) and olympic_id = 1;
                     
 select * from connections;
+
+
+--Procedures to make the Queries easy to run
+
+--------------------------------------------
+--------------Organizer---------------------
+--------------------------------------------
+--Create User
+create or replace procedure myCreateUser(username in string, passkey in string, role in number)
+as 
+Begin
+    insert into User_Account values (User_id_seq.nextval, username, passkey, role, systimestamp); 
+End;
+/
+
+
+--Drop User
+create or replace procedure dropUser(uname in string)
+as 
+Begin
+    delete from User_Account where username = uname; 
+End;
+/
+
+--Create Event
+create or replace procedure createEvent (sportId in number, venueId in number, gender in number, dateStart in string)
+as
+Begin
+    insert into Event values (eventid_seq.nextval, sportId , venueId, gender, dateStart);
+End;
+/
+
+--Add event outcome uses ASSIGN MEDAL trigger
+create or replace procedure addEventOutcome(olympicID in number, teamId in number,eventId in number, participantId in number, positionNum in number)
+as
+Begin
+    insert into scoreboard (olympic_id, event_id, team_id, participant_id, position) values(olympicID, teamId, eventId, participantId, positionNum);
+End;
+/
+
+
+--------------------------------------------
+------------------Coach---------------------
+--------------------------------------------
+
+--Create Team
+create or replace procedure createTeam (city in string, year in number, sport in string, countryName in string, teamName in string, userName in string)
+as
+
+Begin    
+    insert into team values (teamid_seq.nextval, (select distinct olympic_Id from olympics where host_city = city and rownum = 1),
+                                teamName, (select distinct  country_Id from country where country = countryName and rownum = 1) ,
+                                (select distinct  sport_Id from sport  where sport_name = sport and rownum = 1), (select distinct user_id from  user_Account where username = userName and rownum = 1));
+End;
+/
+
+--Register Team
+create or replace procedure registerTeam(teamId in number, eventId in number)
+as
+Begin
+    insert into event_participation values(eventId, teamId, 'e');
+End;
+/
+
+--add Participant
+create or replace procedure addParticipant(fname in string, lname in string, nationality in string, birthplace in string,  dob in date)
+as
+Begin
+    insert into participant values (participantid_seq.nextval, fname, lname, nationality, birthplace, dob);
+End;
+/
+
+--add team member
+create or replace procedure addTeamMember(teamId in number, participantId in number)
+as
+Begin
+    insert into team_Member values (teamId, participantId);
+end;
+/
+
+--drop team member
+create or replace procedure dropTeamMember(participantId in number)
+as
+Begin
+    delete from participant where participant_id = participantId;
+end;
+/
+
+--login
+create or replace procedure login(userName in string, password in string, role out number)
+as
+Begin
+    select role_id into role from USER_ACCOUNT where username = userName and passkey = password;
+End;
+/
+

@@ -46,30 +46,42 @@ public class Olympic{
 			return;
 		}
 		try{
-		Statement sqlStatement;
-		sqlStatement = olympicDb.createStatement();
-		String query = "insert into User_Account values (User_id_seq.nextval, '" + userName + "', '"+ passkey+ "', "+ role_ID+", systimestamp)";
-		System.out.println(query);
-		sqlStatement.executeQuery(query);
+
+		PreparedStatement sqlStatement;
+		String query = "call myCreateUser(?, ?, ?)";
+		//String query = "Begin insert into User_Account values (User_id_seq.nextval, ?, ?, ?, systimestamp); end;";//"insert into User_Account values (User_id_seq.nextval, '" + userName + "', '"+ passkey+ "', "+ role_ID+", systimestamp)";
+		sqlStatement = olympicDb.prepareStatement(query);
+		sqlStatement.setString(1, userName);
+		sqlStatement.setString(2, passkey);
+		sqlStatement.setInt(3, role_ID);
+		//System.out.println(query);
+		sqlStatement.executeUpdate();
+
 		}catch(Exception e){
-			 // e.printStackTrace();
-			System.out.println("Error encountered");
+			e.printStackTrace();
+			// System.out.println("Error encountered");
 		}
 
 	}
 
 	public static void dropUser(String user){
+		
 		if (userRole != 1){
 			System.out.println("You do not have access to this command");
 			return;
+		}else if(user.equals(userNameLogin)){
+			System.out.println("Can not delte user while they are logged in");
 		}
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			sqlStatement.executeQuery("delete from User_Account where username = '" + user + "'");
+			PreparedStatement sqlStatement;
+			String query = "call dropUser(?)";
+			//String 	query = "Begin delete from User_Account where username =  ?; end;";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setString(1, user);
+			sqlStatement.executeUpdate();
 		}catch(Exception e){
-			System.out.println("Error encountered");
-			 // e.printStackTrace();
+			// System.out.println("Error encountered");
+			e.printStackTrace();
 		}
 	}
 
@@ -83,13 +95,21 @@ public class Olympic{
 		int sex;
 		if(gender == 'm' || gender == 'M'){
 			sex = 1;
-		}else{
+		}else if (gender == 'f' || gender == 'F'){
 			sex = 0;
+		}else{
+			sex = 2;
 		}
 		try{
-		Statement sqlStatement;
-		sqlStatement = olympicDb.createStatement();
-		sqlStatement.executeQuery("insert into Event values (eventid_seq.nextval, " + sportId + ", "+ venueId+ ", "+ sex+", '"+ date +"')");
+		PreparedStatement sqlStatement;
+		String query = "call createEvent(?, ?, ?, ?)";
+		// String query = "Begin insert into Event values (eventid_seq.nextval, ? , ?, ?, ?); end;";
+		sqlStatement = olympicDb.prepareStatement(query);
+		sqlStatement.setInt(1, sportId);
+		sqlStatement.setInt(2, venueId);
+		sqlStatement.setString(4, date);
+		sqlStatement.setInt(3, sex);
+		sqlStatement.executeUpdate();
 		}catch(Exception e){
 			 e.printStackTrace();
 			//System.out.println("Error encountered");
@@ -103,9 +123,18 @@ public class Olympic{
 			return;
 		}
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			sqlStatement.executeQuery("insert into scoreboard (olympic_id, event_id, team_id, participant_id, position) values(" + olympicID + ", " + eventId + ", " + teamId + ", " + participantId + "," + position+")");
+			PreparedStatement sqlStatement;
+			String query = "call addEventOutcome(?, ?, ?, ?, ?)";
+			//String query = "Begin insert into scoreboard (olympic_id, event_id, team_id, participant_id, position) values(?, ?, ?,?,?); end;";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setInt(1, olympicID);
+			sqlStatement.setInt(2, eventId);
+			sqlStatement.setInt(3, teamId);
+			sqlStatement.setInt(4, participantId);
+			sqlStatement.setInt(5, position);
+			sqlStatement.executeUpdate();
+			
+			
 		}catch(Exception e){
 			 // System.out.println("Error encountered");
 			 e.printStackTrace();
@@ -122,42 +151,50 @@ public class Olympic{
 		}
 
 		try{
-		Statement sqlStatement;
-		sqlStatement = olympicDb.createStatement();
-		int countryId;
-		int sportId;
-		int olympicId;
-		int coachId;
+		PreparedStatement sqlStatement;
+		
+		// int countryId;
+		// int sportId;
+		// int olympicId;
+		// int coachId;
 
-		ResultSet result;
+		// ResultSet result;
 
-		String preQuery = "select country_Id from country where country = '" + country+ "'";
-		result = sqlStatement.executeQuery(preQuery);
-		result.next();
-		countryId = (int)result.getLong(1);
+		// String preQuery = "select country_Id from country where country = '" + country+ "'";
+		// result = sqlStatement.executeQuery(preQuery);
+		// result.next();
+		// countryId = (int)result.getLong(1);
 
-		preQuery = "select sport_Id from sport where sport_name = '" + sport + "'";
-		result = sqlStatement.executeQuery(preQuery);
-		result.next();
-		sportId = (int)result.getLong(1);
+		// preQuery = "select sport_Id from sport where sport_name = '" + sport + "'";
+		// result = sqlStatement.executeQuery(preQuery);
+		// result.next();
+		// sportId = (int)result.getLong(1);
 
 
-		preQuery = "select olympic_Id from olympics where host_city = '" + city + "'";
-		result = sqlStatement.executeQuery(preQuery);
-		result.next();
-		olympicId = (int)result.getLong(1);
+		// preQuery = "select olympic_Id from olympics where host_city = '" + city + "'";
+		// result = sqlStatement.executeQuery(preQuery);
+		// result.next();
+		// olympicId = (int)result.getLong(1);
 
-		preQuery = "select user_Id from user_Account where username = '" + userNameLogin + "'";
-		result = sqlStatement.executeQuery(preQuery);
-		result.next();
-		coachId = (int)result.getLong(1);
+		// preQuery = "select user_Id from user_Account where username = '" + userNameLogin + "'";
+		// result = sqlStatement.executeQuery(preQuery);
+		// result.next();
+		// coachId = (int)result.getLong(1);
 
-		String query = "insert into team values (teamid_seq.nextval, " + olympicId + ", '"+ teamName+ "', "+ countryId+ ", "+ sportId+", "+ coachId+ ")";
-		System.out.println(query);
-		sqlStatement.executeQuery(query);
+		// String query = "begin insert into team values (teamid_seq.nextval, " + olympicId + ", '"+ teamName+ "', "+ countryId+ ", "+ sportId+", "+ coachId+ "); end;";
+		String query = "call createTeam( ?, ?,?, ?, ?, ?)";
+		sqlStatement = olympicDb.prepareStatement(query);
+		sqlStatement.setString(1, city);
+		sqlStatement.setInt(2, year);
+		sqlStatement.setString(3, sport);
+		sqlStatement.setString(4, country);
+		sqlStatement.setString(5, teamName);
+		sqlStatement.setString(6, userNameLogin);
+
+		sqlStatement.executeUpdate();
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 // System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 
 	}
@@ -170,13 +207,16 @@ public class Olympic{
 			return;
 		}
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			String preQuery = "insert into event_participation values(" + eventId + ", " + teamId + ", 'e')";
-			sqlStatement.executeQuery(preQuery);
+			PreparedStatement sqlStatement;
+			String preQuery = "call registerTeam(?, ?)";
+			// String preQuery = "begin insert into event_participation values(?, ?, 'e'); end;";
+			sqlStatement = olympicDb.prepareStatement(preQuery);
+			sqlStatement.setInt(2, eventId);
+			sqlStatement.setInt(1, teamId);
+			sqlStatement.executeUpdate();
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 // System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 
 	}
@@ -189,10 +229,16 @@ public class Olympic{
 		}
 		
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			String preQuery = "insert into participant values (participantid_seq.nextval,'" + fname + "', '" + lname + "', '" + nationality + "', '" + birthPlace +"', '"+dob+"')";
-			sqlStatement.executeQuery(preQuery);
+			PreparedStatement sqlStatement;
+			// String preQuery = "Begin insert into participant values (participantid_seq.nextval,?, ?, ?, ?, ?); end;";
+			String preQuery = "call addParticipant(?, ?, ?, ?, ?)";
+			sqlStatement = olympicDb.prepareStatement(preQuery);
+			sqlStatement.setString(1, fname);
+			sqlStatement.setString(2, lname);
+			sqlStatement.setString(5, dob);
+			sqlStatement.setString(3, nationality);
+			sqlStatement.setString(4, birthPlace);
+			sqlStatement.executeUpdate();
 		}catch(Exception e){
 			 //System.out.println("Error encountered");
 			 e.printStackTrace();
@@ -209,10 +255,14 @@ public class Olympic{
 		}
 
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			String preQuery = "insert into team_member values (" + teamId + ", " + participantId + ")";
-			sqlStatement.executeQuery(preQuery);
+			PreparedStatement sqlStatement;
+			// String preQuery = "Begin insert into team_member values (?, ?); end;";
+			String preQuery = "call addTeamMember(?, ?)";
+			sqlStatement = olympicDb.prepareStatement(preQuery);
+			
+			sqlStatement.setInt(1, teamId);
+			sqlStatement.setInt(2, participantId);
+			sqlStatement.executeUpdate();
 		}catch(Exception e){
 			 // System.out.println("Error encountered");
 			 e.printStackTrace();
@@ -229,9 +279,12 @@ public class Olympic{
 			return;
 		}
 		try{
-		Statement sqlStatement;
-		sqlStatement = olympicDb.createStatement();
-		sqlStatement.executeQuery("delete from participant where participant_id = " + participantId);
+		PreparedStatement sqlStatement;
+		// String query = "begin delete from participant where participant_id = ?; end;";
+		String query = "call dropTeamMember(?)";
+		sqlStatement = olympicDb.prepareStatement(query);
+		sqlStatement.setInt(1, participantId);
+		sqlStatement.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();
 			//System.out.println("Error encountered");
@@ -254,10 +307,7 @@ public class Olympic{
 			result.next();
 			userRole = (int)result.getLong(1);
 
-			sqlStatement = olympicDb.createStatement();
 			
-			query = "update user_account set last_login = systimestamp where username = '" + user + "'";
-			result = sqlStatement.executeQuery(query);
 
 			userNameLogin = user;
 
@@ -283,27 +333,32 @@ public class Olympic{
 
 		ResultSet result;
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			String preQuery = "select dob from sport where sport_name  = '" + sport + "'";
-			result = sqlStatement.executeQuery(preQuery);
-			result.next();
-			String dob = result.getString(1);
-
-			System.out.println(sport + " was added in " + dob);
-
-
-			String query = "select event_Id from event natural join sport where sport_name = '" + sport+ "'";
+			PreparedStatement sqlStatement;
+			String preQuery = "select dob from sport where sport_name  = ?";
+			sqlStatement = olympicDb.prepareStatement(preQuery);
+			sqlStatement.setString(1, sport);
+			result = sqlStatement.executeQuery();
 			
-			System.out.println("The event Ids for this sport are:");
-			result = sqlStatement.executeQuery(query);
+			result.next();
+			System.out.println(sport + " was added in " + result.getString(1));
+
+
+			String query = "select event_Id from event natural join sport where sport_name = ?";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setString(1, sport);
+			result = sqlStatement.executeQuery();
+			System.out.println("EventIds");
 			while(result.next()){
-				System.out.println("Event Id: " + result.getString(1));
+				System.out.println(result.getString(1));
 			}
 
-			query = "select gender from event natural join sport where sport_name ='" + sport+ "'";
-			result = sqlStatement.executeQuery(query);
+			query = "select gender from event natural join sport where sport_name =?";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setString(1, sport);
+			result = sqlStatement.executeQuery();
+
 			result.next();
+
 			int gender = (int)result.getLong(1);
 			if (gender == 1){
 				System.out.println("Sport is : male");
@@ -322,12 +377,13 @@ public class Olympic{
 					    " natural join (select medal_id, medal_title from medal )"+
 					    " natural join (select team_id, country_id, country from country natural join team )"+
 					    " natural join (select olympic_id, opening_date from olympics)"+
-					" where sport_name = '"+ sport + "'" +
+					" where sport_name = ?" +
 					" order by medal_id asc, opening_date asc";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setString(1, sport);
+			result = sqlStatement.executeQuery();
 
-			
-			result = sqlStatement.executeQuery(query);
-			System.out.println("FNAME\t\tLNAME\t \tCOUNNTRY \t\tMEDAL\t\tDATE");
+			System.out.println("FNAME\t\tLNAME\t \tCOUNTRY \t\tMEDAL\t\tDATE");
 			while(result.next()){
 				
 				System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + " ");
@@ -335,29 +391,31 @@ public class Olympic{
 
 		}catch(Exception e){
 			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 e.printStackTrace();
 		}
 
 	}
 
 	public static void displayEvent(String city, int year, int eventID){
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
+			PreparedStatement sqlStatement;
+			
 			String query = "select distinct host_city, fName, Lname, position, medal_title, sport_name" + 
 							" from scoreboard natural join olympics natural join event natural join participant natural join medal natural join (team natural join sport)" + 
-							" where host_city = '" + city+ "' and event_id = "+ eventID +
+							" where host_city = ? and event_id = ?"+
 							"order by position asc";
-
-			ResultSet result = sqlStatement.executeQuery(query);
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setString(1, city);
+			sqlStatement.setInt(2, eventID);
+			ResultSet result = sqlStatement.executeQuery();
 			System.out.println("HOST CITY\t\tFNAME\t\tLNAME\t\tPOSITION\t\tMEDAL\t\tSPORT NAME");
 			while(result.next()){
 				
 				System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5) + "\t\t" + result.getString(6));
 			}
 		}catch(Exception e){
-			 System.out.println("Error encountered");
-			 // e.printStackTrace();
+			 // System.out.println("Error encountered");
+			 e.printStackTrace();
 		}
 
 	}
@@ -369,37 +427,41 @@ public class Olympic{
 		// along with the number of gold, silver and bronze medals and their ranking sorted in 
 		// descending order. The rank is computed based on the points associated with each metal.
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
+			PreparedStatement sqlStatement;
+			
 			String query = "select * from ("+
 							    " select coalesce(country_code, cc2, cc3) as country_code, coalesce(gold, 0) as gold, coalesce(silver, 0) as silver, coalesce(bronze,0) as bronze, (3*coalesce(gold, 0)+ 2* coalesce(silver, 0) +coalesce(bronze,0)) as score"+
 							    " from(("+
 							      "   (select country_id, country_code, count(medal_id) as gold"+
 							      "   from country natural join scoreboard natural join team natural join participant"+
-							      "   where medal_id = 1 and olympic_id = "+olympicId +
+							      "   where medal_id = 1 and olympic_id = ?"+
 							      "   group by country_id, country_code) "+
 							      "   full outer join"+
 							      "   (select country_id as c2Id, country_code as cc2, count(medal_id) as silver"+
 							      "       from country natural join scoreboard natural join team natural join participant"+
-							      "       where medal_id = 2 and olympic_id = "+olympicId+
+							      "       where medal_id = 2 and olympic_id = ?"+
 							      "       group by country_id, country_code)  on c2Id = country_id"+
 							      "   full outer join     "+
 							       "     (select country_id as c3_id, country_code as cc3, count(medal_id) as bronze"+
 							        "    from country natural join scoreboard natural join team natural join participant"+
-							       "     where medal_id = 3 and olympic_id = "+olympicId+
+							       "     where medal_id = 3 and olympic_id = ?"+
 							      "     group by country_id, country_code) on c3_Id = country_id"+
 							      "  ))"+
 							   " ) natural join"+
 							   " (   select country_code, min(event_time) as appeared"+
 							   "     from scoreboard natural join team natural join event natural join country"+
-							   "     where olympic_id = "+olympicId+
+							   "     where olympic_id = ?"+
 							   "     group by country_code)"+
 							   " where country_code is not null"+
 							   " order by score desc";
     
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setInt(1, olympicId);
+			sqlStatement.setInt(2, olympicId);
+			sqlStatement.setInt(3, olympicId);
+			sqlStatement.setInt(4, olympicId);
 
-
-			ResultSet result = sqlStatement.executeQuery(query);
+			ResultSet result = sqlStatement.executeQuery();
 			System.out.println("COUNTRY CODE\t\tGOLD\t\tSILVER\t\tBRONZE\t\tSCORE\t\tAPPEARED");
 			while(result.next()){
 				
@@ -415,29 +477,33 @@ public class Olympic{
 
 	public static void topkAthletes(int k, int olympicId){
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
+			PreparedStatement sqlStatement;
+			
 			String query = "select fName, lName, gold, silver, bronze, rownum as rank from"+
 							"	(select coalesce(participant_id, pid2, pid3) as participant_id, coalesce(fname, fn1, fn2) as fName, coalesce(lname, ln1, ln2) as lName, coalesce(gold, 0) as gold, coalesce(silver,0) as silver, coalesce(bronze,0) as bronze, (3* coalesce(gold, 0) + 2*coalesce(silver,0) + 1 * coalesce(bronze,0)) as score from("+
        						"	 (select participant_id, fname, lname, count(medal_id) as gold"+
 						  "      from  scoreboard natural join participant "+
-						  "      where medal_id = 1 and olympic_id = "+ olympicId +
+						  "      where medal_id = 1 and olympic_id = ?"+
 						  "      group by participant_id, fname, lname) "+
 						  "      full outer join"+
 						 "       (select participant_id as pid2, fname as fn1, lname as ln1, count(medal_id) as silver"+
 						  "          from scoreboard natural join participant "+
-						 "           where medal_id = 2 and olympic_id = "+ olympicId +
+						 "           where medal_id = 2 and olympic_id = ?"+
 						 "           group by participant_id, fname, lname)  on pid2 = participant_id"+
 						 "       full outer join     "+
 						 "           (select participant_id as pid3, fname as fn2, lname as ln2, count(medal_id) as bronze"+
 						 "           from scoreboard natural join participant "+
-						 "           where medal_id = 3 and olympic_id = "+ olympicId +
+						 "           where medal_id = 3 and olympic_id = ?" +
 						 "           group by participant_id, fname, lname) on pid3 = participant_id"+
 						 "       )"+
 						"order by score desc)"+
-						"where rownum <= " + k;
-
-			ResultSet result = sqlStatement.executeQuery(query);
+						"where rownum <= ?";
+			sqlStatement = olympicDb.prepareStatement(query);
+			sqlStatement.setInt(1, olympicId);
+			sqlStatement.setInt(2, olympicId);
+			sqlStatement.setInt(3, olympicId);
+			sqlStatement.setInt(4, k);
+			ResultSet result = sqlStatement.executeQuery();
 			System.out.println("FNAME\t\tLNAME\t\tGOLD\t\tSILVER\t\tBRONZE\t\tRANK");
 			while(result.next()){
 				
@@ -454,20 +520,45 @@ public class Olympic{
 		//This gets it for 1 level of connectivity. I'm not sure how to do level 2
 		ResultSet result;	
 		try{
-			Statement sqlStatement;
-			sqlStatement = olympicDb.createStatement();
-			String preQuery = "create or replace view connections as"+
+			PreparedStatement sqlStatement;
+			
+			String preQuery ="create or replace view connections as"+
 							" select distinct fname, lname, participant_id"+
 							" from EVENT_PARTICIPATION  natural join team natural join team_member natural join participant "+
 							" where event_id in (select event_id "+
 		                    " from EVENT_PARTICIPATION natural join team natural join team_member natural join participant"+
-		                    " where participant_id = "+ participantId+") and olympic_id = " + olympicId;
-		                    
-							
-			sqlStatement.executeQuery(preQuery);
+		                    " where participant_id = "+participantId+") and olympic_id = "+ olympicId ;
+		    sqlStatement = olympicDb.prepareStatement(preQuery);    
+		    sqlStatement.executeUpdate();            
+			String query = "select * from connections";
+		    	//Run a quick test to see if it's all there
+			sqlStatement = olympicDb.prepareStatement(query);
+			result = sqlStatement.executeQuery();
+			
+		    for(int i = 1; i <= n; i++){
+		    	while(result.next()){
+		    		preQuery += "Union"+
+		    					" select distinct fname, lname, participant_id"+
+								" from EVENT_PARTICIPATION  natural join team natural join team_member natural join participant "+
+								" where event_id in (select event_id "+
+		                 	   	" from EVENT_PARTICIPATION natural join team natural join team_member natural join participant"+
+		                 	   	" where participant_id = "+result.getLong(3)+") and olympic_id = "+ (olympicId-i) ;
+		    	    
+		    	}
+		 
+		    	sqlStatement = olympicDb.prepareStatement(preQuery);  
+		        result = sqlStatement.executeQuery();                  	   	 
+		    }
+
+		    
+
 			preQuery = "select * from connections";
+			sqlStatement = olympicDb.prepareStatement(preQuery);
 			result = sqlStatement.executeQuery(preQuery);
-		
+			System.out.println("Athletes Connected to Participant "+participantId);
+			while(result.next()){
+				System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getLong(3));
+			}
 		}catch(Exception e){
 			 e.printStackTrace();
 		}
@@ -476,9 +567,21 @@ public class Olympic{
 	}
 
 	public static void logout(){
+		
+		try{
+		
+			
+		//String query = "update user_account set last_login = systimestamp where username = '" + userNameLogin + "'";
+		String query = "Call Logout(?)";
+		PreparedStatement sqlStatement = olympicDb.prepareStatement(query);
+		sqlStatement.setString(1, userNameLogin);
+		sqlStatement.executeUpdate();
 		userRole = 0;
 		userNameLogin ="";
 		loggedIN = false;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public static void exit(){
