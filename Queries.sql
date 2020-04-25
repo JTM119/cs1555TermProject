@@ -1,6 +1,6 @@
 --Joshua Martin
 --JTM119
---Queries.sql
+--Queries.sql --Final 
 
 --------------------------------------------
 --------------Organizer---------------------

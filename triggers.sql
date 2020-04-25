@@ -1,6 +1,6 @@
 --Joshua Martin
 --JTM119
---Triggers 
+--Triggers and Procedures
 ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
 SET SERVEROUTPUT ON
 
@@ -205,3 +205,5 @@ Begin
     update user_account set last_login = systimestamp where username = userNameLogin;
 End;
 /
+
+commit;

@@ -1,6 +1,6 @@
 //Joshua Martin
 //JTM119
-//Olympics.java
+//Olympics.java Final
 
 import java.sql.*;
 import java.util.*;

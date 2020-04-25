@@ -1,7 +1,11 @@
 --Joshua Martin
 --JTM119
 --Insert Statements
---init.sql
+--init.sql final
+
+--NOT FOR GRADER - THERE ARE VALUES THAT WERE ADDED TO TEST THINGS THAT MAY CAUSE AN ERROR : THIS IS INTENTIONAL
+
+
 SET SERVEROUTPUT ON
 --Create the USER_ROLES (Role Id, Role name)
 insert into USER_ROLE values (1, 'Organizer');
@@ -85,7 +89,7 @@ insert into OLYMPICS values (olympicid_seq.nextval, 'XXX', 'London', '27-JUL-201
 insert into OLYMPICS values (olympicid_seq.nextval, 'XXX1', 'Rio', '05-AUG-2016', '21-AUG-2016', 'https://www.olympic.org/rio-2016');
 insert into OLYMPICS values (olympicid_seq.nextval, 'XXVIII', 'Athens', '12-AUG-2004', '29-AUG-2004', 'https://www.olympic.org/athens-2004');
 commit;
-select * from  olympics;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 --SPORTS (sport id, event name, description, dob, team size)
@@ -96,7 +100,7 @@ insert into SPORT values (sportid_seq.nextval, 'Doubles Mens Badminton', 'Hittin
 insert into SPORT values (sportid_seq.nextval, 'Mixed Doubles Badminton', 'Hitting a birdie over a net with men and women', '25-JUL-1992', 2);
 insert into SPORT values (sportid_seq.nextval, 'Womens Singles Badminton', 'Hitting a birdie over a net, but it is women by themselves', '25-JUL-1992', 1);
 commit;
-select * from  sport;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 --COUNTRY (Id, Counry, Country Code)
 insert into COUNTRY values (countryid_seq.nextval, 'South Korea', 'KOR');
@@ -117,7 +121,7 @@ insert into COUNTRY values (countryid_seq.nextval, 'Indonesia', 'INA');
 insert into COUNTRY values (countryid_seq.nextval, 'India', 'IND');
 insert into COUNTRY values (countryid_seq.nextval, 'Netherlands', 'NED');
 commit;
-select * from  country;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 --MEDALS (id, place, points)
 insert into medal values (1, 'Gold', 3); 
@@ -148,7 +152,7 @@ insert into VENUE values (venueid_seq.nextval, 2, 'SEE Arena', 5);
 insert into VENUE values (venueid_seq.nextval, 3, 'RiocentroConvention', 5);
 insert into VENUE values (venueid_seq.nextval, 4, 'GoudiOlympicHall', 5);
 commit;
-select * from venue;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 --EVENT (event_id, sport id, venue id, gender, date)
 --Gender 1 is male, 0 is female, 2 is for both
@@ -200,7 +204,7 @@ insert into EVENT values (eventid_seq.nextval, 6, 10, 'F', '02-AUG-2012');
 insert into EVENT values (eventid_seq.nextval, 6, 11, 'F', '15-AUG-2016');
 insert into EVENT values (eventid_seq.nextval, 6, 12, 'F', '27-AUG-2004');
 commit;
-select * from event;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 --PARTICIPANT (participant id, fname, lname, nationality, place of birth, dob)
 ---------------------------------------------------------------------
@@ -348,7 +352,7 @@ insert into PARTICIPANT values (participantid_seq.nextval,	'Carolina', 'Marín',
 insert into PARTICIPANT values (participantid_seq.nextval, 'Pusarla', 'Sindhu', 'India', 'Hyderabad', '05-JUL-1995');
 insert into PARTICIPANT values (participantid_seq.nextval, 'Nozomi', 'Okuhara', 'Japan', 'Ōmachi', '13-MAR-1995');
 commit;
-select * from  participant;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 --TEAM (team id, olympic id, team name, country id, sport id, coachid)
 ---------------------------------------------------------------------
@@ -469,7 +473,7 @@ insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-JPN', 11, 6, 3
 insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-IND', 16, 6, 34);
 insert into TEAM values (teamid_seq.nextval, 3, 'SingleBadmitten2-ESP', 8, 6, 35);
 commit;
-select * from team;
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 --TEAM_MEMBER (team id, participant id)

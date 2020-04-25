@@ -1,7 +1,7 @@
 --Joshua Martin
 --JTM119
 --Olympics Database Project
---Table Creation Script
+--Table Creation Script - Final Version
 
 --AFTER CREATING THE TABLES CREATE ALL OF THE CONSTRAINTS
 drop table EVENT_PARTICIPATION;
