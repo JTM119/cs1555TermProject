@@ -5,7 +5,7 @@ ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
 SET SERVEROUTPUT ON
 
 
---Assign Medals -- This gives me a mutating trigger but I'm not sure if it actually does anything
+--Assign Medals -- 
 CREATE OR REPLACE TRIGGER ASSIGN_MEDAL 
 before insert on scoreboard
 for each row
@@ -75,20 +75,20 @@ end;
 
 --Supposed to check to see if the team size is allowed, but It keeps mutating when I try and count the number of people on the team
 --Not sure how to get the full team size
-create or replace trigger verify_team_size
-after insert on TEAM_MEMBER
-for each row
-declare
-    max_size integer;
-    current_size integer;
-Begin
-    --select count(*) into current_size from TEAM_MEMBER where team_id = :new.team_id;
-    select team_size into max_size 
-    from sport natural join team
-    where team_id = :new.team_id; 
-    dbms_output.put_line('insert successfully');
-end;
-/
+--create or replace trigger verify_team_size
+--after insert on TEAM_MEMBER
+--for each row
+--declare
+--    max_size integer;
+--    current_size integer;
+--Begin
+--    --select count(*) into current_size from TEAM_MEMBER where team_id = :new.team_id;
+--    select team_size into max_size 
+--    from sport natural join team
+--    where team_id = :new.team_id; 
+--    dbms_output.put_line('insert successfully');
+--end;
+--/
 
 
 

@@ -28,12 +28,11 @@ drop sequence sportid_seq;
 
 create table USER_ROLE(
     role_id integer not null,   
-    role_name varchar2(20)not null,
-    
-    CONSTRAINT ROLE_PK PRIMARY KEY (role_id) initially immediate deferrable, 
+    role_name varchar2(20) not null,
     CHECK (role_id < 4), 
     CHECK (role_id > 0),
-    CHECK (role_name in ('Organizer', 'Coach', 'Guest'))
+    CHECK (role_name in ('Organizer', 'Coach', 'Guest')),
+    CONSTRAINT ROLE_PK PRIMARY KEY (role_id) initially immediate deferrable
 );
 
 create table USER_ACCOUNT (
@@ -42,7 +41,6 @@ create table USER_ACCOUNT (
     passkey varchar2(20) not null,
     role_id integer not null,
     last_login date not null,
-
     CONSTRAINT USER_ACCOUNT_PK PRIMARY KEY (user_id) initially immediate deferrable ,
     CONSTRAINT USER_ACCOUNT_FK FOREIGN KEY (role_id) references USER_ROLE(role_id) initially immediate deferrable 
 );
@@ -61,9 +59,7 @@ create table OLYMPICS(
     opening_date date not null,
     closing_date date not null,
     official_website varchar2(50),
-
     CONSTRAINT OLYMPICS_PK PRIMARY KEY(olympic_id) initially immediate deferrable 
-    
 );
 
 create sequence olympicID_seq
@@ -97,7 +93,6 @@ create table COUNTRY(
     country_id integer not null,
     country varchar2(20) not null unique,
     country_code varchar2(3) not null unique,
-    
     CONSTRAINT COUNTRY_PK PRIMARY KEY (country_id) initially immediate deferrable 
 );
 
@@ -115,7 +110,6 @@ create table PARTICIPANT(
     nationality varchar2(20) not null,
     birth_place varchar2(40) not null,
     dob date not null,
-
     CONSTRAINT PARTICIPANT_PK PRIMARY KEY (participant_id) initially immediate deferrable,
     CONSTRAINT PARTICIPANT_FK FOREIGN KEY (nationality) REFERENCES COUNTRY(country) initially deferred deferrable 
 );
@@ -133,13 +127,11 @@ create table TEAM(
     country_id integer not null,
     sport_id integer not null,
     coach_id integer not null,
-    
     CONSTRAINT TEAM_PK PRIMARY KEY (team_id) initially immediate deferrable ,
     CONSTRAINT TEAM_COUNTRY_FK FOREIGN KEY (country_id) REFERENCES COUNTRY(country_id) initially immediate deferrable ,
     CONSTRAINT TEAM_OLYMPIC_ID_FK FOREIGN KEY (olympic_id) REFERENCES OLYMPICS(olympic_id) initially immediate deferrable ,
     CONSTRAINT TEAM_SPORT_FK FOREIGN KEY (sport_id) REFERENCES SPORT(sport_id) initially immediate deferrable ,
     CONSTRAINT TEAM_COACH_FK FOREIGN KEY (coach_id) REFERENCES USER_ACCOUNT(user_id) initially immediate deferrable 
-    
 );
 
 create sequence teamid_seq
@@ -153,7 +145,6 @@ nocycle;
 create table TEAM_MEMBER(
     team_id integer,
     participant_id integer,
-    
     CONSTRAINT TEAM_MEMBER_PK PRIMARY KEY (team_id, participant_id) initially immediate deferrable ,
     CONSTRAINT TEAM_MEMBER_TEAMID FOREIGN KEY (team_id) REFERENCES TEAM(team_id) initially immediate deferrable ,
     CONSTRAINT TEAM_MEMBER_PARTICIPANT_ID FOREIGN KEY(participant_id) REFERENCES PARTICIPANT(participant_id) initially immediate deferrable 
@@ -164,7 +155,6 @@ create table MEDAL(
     medal_id integer,
     medal_title varchar2(6) not null,
     points integer not null,
-    
     CONSTRAINT MEDAL_PK PRIMARY KEY (medal_id) initially immediate deferrable 
 );
 
@@ -192,7 +182,6 @@ create table EVENT(
     venue_id integer not null,
     gender char not null,
     event_time date not null,
-    --What check constraint should be here?
     CHECK (gender in ('m','M','f','F','b','B')),
     CONSTRAINT EVENT_PK PRIMARY KEY(event_id) initially immediate deferrable ,
     CONSTRAINT EVENT_SPORT_ID_FK FOREIGN KEY (sport_id) REFERENCES SPORT(sport_id) initially immediate deferrable ,
@@ -213,7 +202,6 @@ create table SCOREBOARD(
     participant_id integer not null,
     position integer not null,
     medal_id integer not null initially deferred,
-
     CONSTRAINT SCOREBOARD_PK PRIMARY KEY (event_id, participant_id, team_id, position) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_OLYMPICID_FK FOREIGN KEY(olympic_id) REFERENCES OLYMPICS(olympic_id) initially immediate deferrable ,
     CONSTRAINT SCOREBOARD_EVENT_ID_FK FOREIGN KEY (event_id) REFERENCES EVENT(event_id) initially immediate deferrable ,
